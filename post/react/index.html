@@ -1,0 +1,193 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>react代码笔记 | leo小筑</title>
+<link rel="shortcut icon" href="https://blog.nnleo.cn/favicon.ico?v=1555752285008">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="stylesheet" href="https://blog.nnleo.cn/styles/main.css">
+
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+<script src="https://cdn.bootcss.com/moment.js/2.23.0/moment.min.js"></script>
+
+
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://blog.nnleo.cn">
+  <img class="avatar" src="https://blog.nnleo.cn/images/avatar.png?v=1555752285008" alt="">
+  </a>
+  <h1 class="site-title">
+    leo小筑
+  </h1>
+  <p class="site-description">
+    温故而知新
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+        <a href="https://github.com/formattedzzz" target="_blank">
+          <i class="fab fa-github"></i>
+        </a>
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+      
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              react代码笔记
+            </h2>
+            <div class="post-info">
+              <time class="post-time">
+                · 2019-04-20 ·
+              </time>
+              
+                <a href="https://blog.nnleo.cn/tag/react" class="post-tags">
+                  # react
+                </a>
+              
+            </div>
+            
+            <div class="post-content">
+              <!-- more -->
+<h3 id="状态state">状态state</h3>
+<ul>
+<li>
+<p>构造函数是唯一能够初始化<code>this.state</code>的地方</p>
+</li>
+<li>
+<p>this.props和this.state可能是异步更新的，你不应该依靠它们的值来计算下一个状态</p>
+</li>
+</ul>
+<pre><code class="language-js">this.setState({
+  counter: this.state.counter + this.props.increment
+})
+</code></pre>
+<p>而应该</p>
+<pre><code class="language-js">this.setState((prevState, props) =&gt; ({
+  counter: prevState.counter + props.increment
+}))
+</code></pre>
+<h3 id="事件绑定">事件绑定</h3>
+<p>相比于传统html绑定 react中采用驼峰命名</p>
+<pre><code class="language-jsx">&lt;button onClick={activateLasers}&gt;
+  Activate Lasers
+&lt;/button&gt;
+</code></pre>
+<p>阻止默认行为 不能 return false</p>
+<pre><code class="language-jsx">function handleClick(e) {
+  // e为合成事件 不需要担心兼容性了
+  e.preventDefault();
+  console.log('The link was clicked.');
+}
+</code></pre>
+<pre><code class="language-js">import React, { Component } from 'react'
+import './index.styl'
+var a = true
+var re = /as\.$/g
+re.test('sdajanbn')
+class Layout extends Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      username: 'leooo',
+      count: 12,
+      useremail: '614791110@qq.com'
+    }
+  }
+  componentDidMount () {
+    console.log('layout-page componentDidMount')
+  }
+  render () {
+    return (
+      &lt;div className=&quot;layout-page&quot;&gt;
+        这是布局界面&lt;br&gt;&lt;/br&gt;
+      &lt;/div&gt;
+    )
+  }
+}
+function adb () {
+	// adb....
+}
+export default Layout
+</code></pre>
+<h3 id="接上面-setstate-到底是同步的还是异步的">接上面 setState 到底是同步的还是异步的</h3>
+<p>先来总结一下几种情况</p>
+<ul>
+<li>合成事件触发的函数体内是异步的</li>
+<li>原生事件触发是同步的 很显然 这跟<strong>事件的合成</strong>处理有关系</li>
+<li>定时器回调中触发是同步的 是因为回调本身就是异步的吗？是的 因为不管什么场景 基于js事件循环机制 定时器回调中总能拿到最新的值</li>
+<li>生命周期里触发也是异步的</li>
+<li>在上面的提到的异步更新的情况下同值连续set会触发 <strong>批量(覆盖)更新</strong>： 连续setState同一个值的话只会set最后一次</li>
+</ul>
+
+            </div>
+          </article>
+        </div>
+    
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://blog.nnleo.cn/post/code">
+              <h3 class="post-title">
+                每天一道面试题
+              </h3>
+            </a>
+          </div>  
+        
+
+        
+    
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+</div>
+
+<script>
+  hljs.initHighlightingOnLoad()
+</script>
+
+      </div>
+    </div>
+  </body>
+</html>
