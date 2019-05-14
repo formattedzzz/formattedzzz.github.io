@@ -4,7 +4,7 @@
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>react代码笔记 | leo小筑</title>
-<link rel="shortcut icon" href="https://blog.nnleo.cn/favicon.ico?v=1555752285008">
+<link rel="shortcut icon" href="https://blog.nnleo.cn/favicon.ico?v=1557850505194">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://blog.nnleo.cn/styles/main.css">
 
@@ -18,7 +18,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://blog.nnleo.cn">
-  <img class="avatar" src="https://blog.nnleo.cn/images/avatar.png?v=1555752285008" alt="">
+  <img class="avatar" src="https://blog.nnleo.cn/images/avatar.png?v=1557850505194" alt="">
   </a>
   <h1 class="site-title">
     leo小筑
@@ -122,36 +122,6 @@
   console.log('The link was clicked.');
 }
 </code></pre>
-<pre><code class="language-js">import React, { Component } from 'react'
-import './index.styl'
-var a = true
-var re = /as\.$/g
-re.test('sdajanbn')
-class Layout extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      username: 'leooo',
-      count: 12,
-      useremail: '614791110@qq.com'
-    }
-  }
-  componentDidMount () {
-    console.log('layout-page componentDidMount')
-  }
-  render () {
-    return (
-      &lt;div className=&quot;layout-page&quot;&gt;
-        这是布局界面&lt;br&gt;&lt;/br&gt;
-      &lt;/div&gt;
-    )
-  }
-}
-function adb () {
-	// adb....
-}
-export default Layout
-</code></pre>
 <h3 id="接上面-setstate-到底是同步的还是异步的">接上面 setState 到底是同步的还是异步的</h3>
 <p>先来总结一下几种情况</p>
 <ul>
@@ -166,15 +136,6 @@ export default Layout
           </article>
         </div>
     
-        
-          <div class="next-post">
-            <div class="next">下一篇</div>
-            <a href="https://blog.nnleo.cn/post/code">
-              <h3 class="post-title">
-                每天一道面试题
-              </h3>
-            </a>
-          </div>  
         
 
         
