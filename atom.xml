@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://blog.nnleo.cn</id>
+    <title>leo小筑</title>
+    <updated>2020-12-29T02:52:52.848Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://blog.nnleo.cn"/>
+    <link rel="self" href="https://blog.nnleo.cn/atom.xml"/>
+    <subtitle>温故而知新</subtitle>
+    <logo>https://blog.nnleo.cn/images/avatar.png</logo>
+    <icon>https://blog.nnleo.cn/favicon.ico</icon>
+    <rights>All rights reserved 2020, leo小筑</rights>
+    <entry>
+        <title type="html"><![CDATA[test]]></title>
+        <id>https://blog.nnleo.cn/post/test/</id>
+        <link href="https://blog.nnleo.cn/post/test/">
+        </link>
+        <updated>2020-12-29T02:51:26.000Z</updated>
+        <summary type="html"><![CDATA[<p>test-content</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>test-content</p>
+<!-- more -->
+<p>this is formal🤠 content<img src="https://blog.nnleo.cn/post-images/1609210327839.jpeg" alt="" loading="lazy"></p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[react代码笔记]]></title>
+        <id>https://blog.nnleo.cn/post/react/</id>
+        <link href="https://blog.nnleo.cn/post/react/">
+        </link>
+        <updated>2019-04-20T08:15:52.000Z</updated>
+        <content type="html"><![CDATA[<!-- more -->
+<h3 id="状态state">状态state</h3>
+<ul>
+<li>
+<p>构造函数是唯一能够初始化<code>this.state</code>的地方</p>
+</li>
+<li>
+<p>this.props和this.state可能是异步更新的，你不应该依靠它们的值来计算下一个状态</p>
+</li>
+</ul>
+<pre><code class="language-js">this.setState({
+  counter: this.state.counter + this.props.increment
+})
+</code></pre>
+<p>而应该</p>
+<pre><code class="language-js">this.setState((prevState, props) =&gt; ({
+  counter: prevState.counter + props.increment
+}))
+</code></pre>
+<h3 id="事件绑定">事件绑定</h3>
+<p>相比于传统html绑定 react中采用驼峰命名</p>
+<pre><code class="language-jsx">&lt;button onClick={activateLasers}&gt;
+  Activate Lasers
+&lt;/button&gt;
+</code></pre>
+<p>阻止默认行为 不能 return false</p>
+<pre><code class="language-jsx">function handleClick(e) {
+  // e为合成事件 不需要担心兼容性了
+  e.preventDefault();
+  console.log('The link was clicked.');
+}
+</code></pre>
+<h3 id="接上面-setstate-到底是同步的还是异步的">接上面 setState 到底是同步的还是异步的</h3>
+<p>先来总结一下几种情况</p>
+<ul>
+<li>合成事件触发的函数体内是异步的</li>
+<li>原生事件触发是同步的 很显然 这跟<strong>事件的合成</strong>处理有关系</li>
+<li>定时器回调中触发是同步的 是因为回调本身就是异步的吗？是的 因为不管什么场景 基于js事件循环机制 定时器回调中总能拿到最新的值</li>
+<li>生命周期里触发也是异步的</li>
+<li>在上面的提到的异步更新的情况下同值连续set会触发 <strong>批量(覆盖)更新</strong>： 连续setState同一个值的话只会set最后一次</li>
+</ul>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[每天一道面试题]]></title>
+        <id>https://blog.nnleo.cn/post/code/</id>
+        <link href="https://blog.nnleo.cn/post/code/">
+        </link>
+        <updated>2019-04-19T11:39:22.000Z</updated>
+        <summary type="html"><![CDATA[<p>说说下面的输出结果 为什么？</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>说说下面的输出结果 为什么？</p>
+<!-- more -->
+<pre><code class="language-js">var a = {n: 1};
+var b = a;
+a.x = a = {n: 2};
+console.log(a.x) 	
+console.log(b.x)
+</code></pre>
+<p>解析：<br>
+首先，a和b同时引用了{n:2}对象，接着执行到a.x = a = {n：2}语句，尽管赋值是从右到左的没错，但是.的优先级比=要高，所以这里首先执行a.x，相当于为a（或者b）所指向的{n:1}对象新增了一个属性x，即此时对象将变为{n:1;x:undefined}。之后按正常情况，从右到左进行赋值，此时执行a ={n:2}的时候，a的引用改变，指向了新对象{n：2},而b依然指向的是旧对象。之后执行a.x = {n：2}的时候，并不会重新解析一遍a，而是沿用最初解析a.x时候的a，也即旧对象，故此时旧对象的x的值为{n：2}，旧对象为 {n:1;x:{n：2}}，它被b引用着。<br>
+后面输出a.x的时候，又要解析a了，此时的a是指向新对象的a，而这个新对象是没有x属性的，故访问时输出undefined；而访问b.x的时候，将输出旧对象的x的值，即{n:2}</p>
+<p>js中<strong>连续赋值</strong>遵循的原则：</p>
+<pre><code class="language-js">var a = b = c
+猜想其复制过程：(从左到右)
+猜想1: b = c; a = b; 正确。c的值只会被读取一次
+猜想2: b = c; a = c;
+</code></pre>
+<p>什么情况连续赋值（不）能拆开写 尽量不要拆开写 除非你真的知道里面的运行原理或造成的后果 要注意连等赋值中存在的引用断开的问题 如果引用断开了 最后一个值就有可能赋到到被GC回收的变量里去了</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[关于]]></title>
+        <id>https://blog.nnleo.cn/post/about/</id>
+        <link href="https://blog.nnleo.cn/post/about/">
+        </link>
+        <updated>2019-01-25T11:09:48.000Z</updated>
+        <content type="html"><![CDATA[<!-- more -->
+<p>这是关于的页面，可以在这里向世界介绍你！</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Hello Gridea]]></title>
+        <id>https://blog.nnleo.cn/post/hello-gridea/</id>
+        <link href="https://blog.nnleo.cn/post/hello-gridea/">
+        </link>
+        <updated>2018-12-11T16:00:00.000Z</updated>
+        <summary type="html"><![CDATA[<p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
+✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
+✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
+<!-- more -->
+<p><a href="https://github.com/getgridea/gridea">Github</a><br>
+<a href="http://hvenotes.fehey.com/">Gridea 主页</a><br>
+<a href="http://fehey.com/">示例网站</a></p>
+<h2 id="特性loeoeooeoeoeo">特性loeoeooeoeoeo👇</h2>
+<p>📝  你可以使用最酷的 <strong>Markdown</strong> 语法，进行快速创作  123</p>
+<p>🌉  你可以给文章配上精美的封面图和在文章任意位置插入图片</p>
+<p>🏷️  你可以对文章进行标签分组</p>
+<p>📋  你可以自定义菜单，甚至可以创建外部链接菜单</p>
+<p>💻  你可以在 <strong>𝖶𝗂𝗇𝖽𝗈𝗐𝗌</strong> 或 <strong>𝖬𝖺𝖼𝖮𝖲</strong> 设备上使用此客户端</p>
+<p>🌎  你可以使用 <strong>𝖦𝗂𝗍𝗁𝗎𝖻 𝖯𝖺𝗀𝖾𝗌</strong> 或 <strong>Coding Pages</strong> 向世界展示，未来将支持更多平台</p>
+<p>💬  你可以进行简单的配置，接入 <a href="https://github.com/gitalk/gitalk">Gitalk</a> 或 <a href="https://github.com/SukkaW/DisqusJS">DisqusJS</a> 评论系统</p>
+<p>🇬🇧  你可以使用<strong>中文简体</strong>或<strong>英语</strong></p>
+<p>🌁  你可以任意使用应用内默认主题或任意第三方主题，强大的主题自定义能力</p>
+<p>🖥  你可以自定义源文件夹，利用 OneDrive、百度网盘、iCloud、Dropbox 等进行多设备同步</p>
+<p>🌱 当然 <strong>Gridea</strong> 还很年轻，有很多不足，但请相信，它会不停向前🏃</p>
+<p>未来，它一定会成为你离不开的伙伴</p>
+<p>尽情发挥你的才华吧！</p>
+<p>😘 Enjoy~</p>
+]]></content>
+    </entry>
+</feed>
